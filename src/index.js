@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './index.css';
-import { Game } from './tick-tack-toe/Game';
+import { Game } from './tic-tac-toe/Game';
 
 
 ReactDOM.render(

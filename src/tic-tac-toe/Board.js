@@ -1,40 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Square } from './Square';
-import { calculateWinner } from './calculate-winner';
 
 
-const initialSquares = Array(9).fill('');
-
-
-export function Board() {
-    const [squares, setSquares] = useState(initialSquares);
-    const [currentPlayer, setCurrentPlayer] = useState('X');
-
-    const winner = calculateWinner(squares);
-    const status = winner ? `Winner: ${winner}` : `Next player: ${currentPlayer}`;
-
-    function handleClick(squarePosition) {
-        const squaresCopy = squares.slice();
-
-        if (winner) {
-            return;
-        }
-
-        squaresCopy[squarePosition] = currentPlayer === 'X' ? 'X' : 'O';
-
-        setSquares(squaresCopy);
-        setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
-    }
-
+export function Board({ squares, onSquareClick }) {
     function renderSquare(squarePosition) {
-        return <Square value={squares[squarePosition]} onClick={() => handleClick(squarePosition)}/>
+        return <Square value={squares[squarePosition]} onClick={() => onSquareClick(squarePosition)}/>
     }
 
     return (
         <div>
-            <div className="status">{status}</div>
-
             <div className="board-row">
                 {renderSquare(0)}
                 {renderSquare(1)}
@@ -53,3 +29,8 @@ export function Board() {
         </div>
     );
 }
+
+Board.propTypes = {
+    squares: PropTypes.array.isRequired,
+    onSquareClick: PropTypes.func.isRequired,
+};
